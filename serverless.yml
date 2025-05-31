@@ -1,4 +1,4 @@
-org: ivanrodriguezperez
+org: geraldocolchado
 service: api-alumnos
 
 provider:
@@ -6,7 +6,7 @@ provider:
   runtime: python3.12
   timeout: 30  
   iam:
-    role: arn:aws:iam::748213590633:role/LabRole
+    role: arn:aws:iam::498917627164:role/LabRole
 
 functions:
   listar:
@@ -18,5 +18,38 @@ functions:
           cors: true
           integration: lambda
 
+  crear:
+    handler: CrearAlumno.lambda_handler
+    events:
+      - http:
+          path: /alumnos/crear
+          method: post
+          cors: true
+          integration: lambda
 
+  modificar:
+    handler: ModificarAlumno.lambda_handler
+    events:
+      - http:
+          path: /alumnos/modificar
+          method: put
+          cors: true
+          integration: lambda
 
+  eliminar:
+    handler: EliminarAlumno.lambda_handler
+    events:
+      - http:
+          path: /alumnos/eliminar
+          method: delete
+          cors: true
+          integration: lambda
+
+  buscar:
+    handler: BuscarAlumno.lambda_handler
+    events:
+      - http:
+          path: /alumnos/buscar
+          method: get
+          cors: true
+          integration: lambda
