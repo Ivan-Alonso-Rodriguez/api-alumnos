@@ -17,6 +17,12 @@ functions:
           method: post
           cors: true
           integration: lambda
+          request:
+            template:
+              application/json: |
+                {
+                  "tenant_id": "$input.json('$.tenant_id')"
+                }
 
   crear:
     handler: CrearAlumno.lambda_handler
@@ -26,6 +32,14 @@ functions:
           method: post
           cors: true
           integration: lambda
+          request:
+            template:
+              application/json: |
+                {
+                  "tenant_id": "$input.json('$.tenant_id')",
+                  "alumno_id": "$input.json('$.alumno_id')",
+                  "alumno_datos": $input.json('$.alumno_datos')
+                }
 
   modificar:
     handler: ModificarAlumno.lambda_handler
@@ -35,6 +49,14 @@ functions:
           method: put
           cors: true
           integration: lambda
+          request:
+            template:
+              application/json: |
+                {
+                  "tenant_id": "$input.json('$.tenant_id')",
+                  "alumno_id": "$input.json('$.alumno_id')",
+                  "alumno_datos": $input.json('$.alumno_datos')
+                }
 
   eliminar:
     handler: EliminarAlumno.lambda_handler
@@ -44,12 +66,26 @@ functions:
           method: delete
           cors: true
           integration: lambda
+          request:
+            template:
+              application/json: |
+                {
+                  "tenant_id": "$input.json('$.tenant_id')",
+                  "alumno_id": "$input.json('$.alumno_id')"
+                }
 
   buscar:
     handler: BuscarAlumno.lambda_handler
     events:
       - http:
           path: /alumnos/buscar
-          method: get
+          method: post  # cambiamos de GET a POST para poder pasar body JSON
           cors: true
           integration: lambda
+          request:
+            template:
+              application/json: |
+                {
+                  "tenant_id": "$input.json('$.tenant_id')",
+                  "alumno_id": "$input.json('$.alumno_id')"
+                }
